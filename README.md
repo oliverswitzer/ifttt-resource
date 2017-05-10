@@ -27,6 +27,10 @@ resources:
     ifttt_key: {{ifttt_api_key}}
 ```
 
+The double curly brackets are a result of injecting `ifttt_api_key` from a separate secrets.yml file via the
+`--load-vars-from=` key of the `fly set-pipeline` command.
+
+
 ## `put` configuration
 
 - `event_name` required
