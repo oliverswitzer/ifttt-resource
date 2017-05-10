@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e 
+
+cd "${1}"
+
+PATH=/usr/local/bin:$PATH
+
+payload=$(mktemp /tmp/resource-in.XXXXXX)
+
+cat > "${payload}" <&0
+
+ifttt_key="$(jq -r '.source.ifttt_key' < ${payload})"
+event_name="$(jq -r '.params.event_name' < ${payload})"
+
+if [ -z "${ifttt_key}" ]
+then
+  echo "ERROR: No IFTTT API key provided." >&2 
+  echo "You can define this under the ifttt resource as 'source.ifttt_key'" >&2
+  exit 1
+fi
+if [ -z "${event_name}" ]
+then
+  echo ERROR: No IFTTT event_name provided. >&2
+  echo "You can define this under the resource 'put' step as 'params.event_name'" >&2
+  exit 1
+fi
+
+curl -s -X POST https://maker.ifttt.com/trigger/${event_name}/with/key/${ifttt_key} > /dev/null
+
+echo "Sent ${event_name} event to IFTTT maker webhook" >&2
+
+echo $(jq -n "{version:{timestamp:\"$(date +%s)\"}}")
+
+exit 0
