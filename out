@@ -31,5 +31,3 @@ curl -s -X POST https://maker.ifttt.com/trigger/${event_name}/with/key/${ifttt_k
 echo "Sent ${event_name} event to IFTTT maker webhook" >&2
 
 echo $(jq -n "{version:{timestamp:\"$(date +%s)\"}}")
-
-exit 0
