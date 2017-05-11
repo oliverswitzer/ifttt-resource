@@ -2,9 +2,12 @@
 
 Pushes Maker events to the [IFTTT maker webhook](https://ifttt.com/maker_webhooks) trigger. 
 
-***NOTE:** `put` is the only action that is supported for now.* Future iterations may include triggering this resource
- from IFTTT. Pull requests are welcome.
+**NOTES:** 
+- `put` is the only action that is supported for now. Future iterations may include triggering a job from this resource
+  in a `get` step, as this functionality is supported in IFTTT as well. 
+- Sending body parameters is not yet supported.
 
+Pull requests are welcome.
 
 ## Source configuration
 
